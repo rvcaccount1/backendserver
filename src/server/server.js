@@ -33,16 +33,43 @@ app.use(cors({
 app.use(express.json());
 
 // 🔹 Initialize Firebase Admin SDK
-const serviceAccountPath = path.resolve(__dirname, "serviceAccountKey.json");
+// const serviceAccountPath = path.resolve(__dirname, "serviceAccountKey.json");
 
-if (fs.existsSync(serviceAccountPath)) {
-  admin.initializeApp({
-    credential: admin.credential.cert(require(serviceAccountPath)),
-  });
-  console.log("✅ Firebase Admin initialized.");
+// if (fs.existsSync(serviceAccountPath)) {
+  // admin.initializeApp({
+    // credential: admin.credential.cert(require(serviceAccountPath)),
+  // });
+  // console.log("✅ Firebase Admin initialized.");
+// } else {
+  // console.error("❌ serviceAccountKey.json not found!");
+// }
+
+// 🔹 Initialize Firebase Admin SDK (Railway support)
+const serviceAccountJson = process.env.FIREBASE_SERVICE_ACCOUNT_JSON;
+
+if (serviceAccountJson) {
+  try {
+    const serviceAccount = JSON.parse(serviceAccountJson);
+    admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount),
+    });
+    console.log("✅ Firebase Admin initialized from Railway variable.");
+  } catch (err) {
+    console.error("❌ Failed to parse FIREBASE_SERVICE_ACCOUNT_JSON:", err?.message || err);
+  }
 } else {
-  console.error("❌ serviceAccountKey.json not found!");
+  // fallback to local JSON file
+  const serviceAccountPath = path.resolve(__dirname, "serviceAccountKey.json");
+  if (fs.existsSync(serviceAccountPath)) {
+    admin.initializeApp({
+      credential: admin.credential.cert(require(serviceAccountPath)),
+    });
+    console.log("✅ Firebase Admin initialized from serviceAccountKey.json.");
+  } else {
+    console.error("❌ serviceAccountKey.json not found and FIREBASE_SERVICE_ACCOUNT_JSON not set!");
+  }
 }
+
 
 let transporter = null;
 try {
