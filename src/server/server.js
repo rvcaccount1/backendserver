@@ -13,16 +13,6 @@ const crypto = require("crypto");
 dotenv.config({ path: path.resolve(__dirname, ".env") });
 
 const app = express();
-
-// ================= CORS FIX ================= //
-// Handle preflight OPTIONS requests globally
-app.options("*", (req, res) => {
-  res.header("Access-Control-Allow-Origin", req.get("origin") || "*");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
-  res.sendStatus(200);
-});
-
 const FRONTEND_BASE_URL = process.env.FRONTEND_BASE_URL || null;
 const allowedOriginsRaw = process.env.CORS_ORIGINS || '';
 const allowedOrigins = allowedOriginsRaw.split(',').map((s) => s.trim()).filter(Boolean);
