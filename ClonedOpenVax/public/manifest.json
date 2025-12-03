@@ -1,0 +1,46 @@
+{
+  "short_name": "OpenVax",
+  "name": "OpenVax Bulacan",
+  "description": "Vaccine Management System for Bulacan",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "logo192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "logo512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#2C3E50",
+  "background_color": "#ffffff",
+  "orientation": "portrait",
+  "categories": ["health", "medical"],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "View Vaccine Stock",
+      "short_name": "Stock",
+      "description": "Check vaccine inventory",
+      "url": "/vaccine-stock",
+      "icons": [{ "src": "favicon.svg", "sizes": "192x192" }]
+    },
+    {
+      "name": "Find Vaccination Sites",
+      "short_name": "Sites",
+      "description": "Locate vaccination centers",
+      "url": "/site-finder",
+      "icons": [{ "src": "favicon.svg", "sizes": "192x192" }]
+    }
+  ]
+}
